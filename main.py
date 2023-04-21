@@ -57,6 +57,10 @@ def criar_produto():
     return jsonify({'id': novo_produto.id})
 
 
+@app.route('/', methods=['GET'])
+def index():
+    return render_template('test.html')
+
 @app.route('/produtos', methods=['GET'])
 def listar_produtos_central():
     # Define a quantidade de produtos exibidos por página
