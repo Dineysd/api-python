@@ -1,0 +1,50 @@
+h1 {
+    text-align: center;
+  font-size: 36px;
+  font-family: Arial, sans-serif;
+  }
+  
+  .produtos {
+    border-collapse: collapse;
+    margin: 0 auto;
+    width: 80%;
+  }
+  
+  .produtos th, .produtos td {
+    padding: 8px;
+    text-align: center;
+  }
+  
+  .produtos th {
+    background-color: #eee;
+  }
+  
+  .produtos tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .paginacao {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .paginacao a, .paginacao span {
+    display: inline-block;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin: 0 5px;
+    text-decoration: none;
+    color: #333;
+  }
+  
+  .paginacao a:hover {
+    background-color: #eee;
+  }
+  
+  .paginacao strong {
+    background-color: #333;
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 4px;
+  }

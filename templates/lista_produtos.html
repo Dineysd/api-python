@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Lista de Produtos</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  </head>
+  <body>
+    <h1 class="text-center mt-4 mb-4">Lista de Produtos</h1>
+    <table class="produtos">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Cód. produto</th>
+          <th>Cód. fornecedor</th>
+          <th>Descrição</th>
+          <th>Cód. Embalagem</th>
+          <th>Descrição Embalagem</th>
+          <th>Quan. Embalagem</th>
+          <th>Cód. de Barras</th>
+          <th>Estoque Baixo</th>
+          <th>Quan. caixa</th>
+          <th>Saldo Estoque</th>
+          <th>Permite vender</th>
+          <th>Reservado</th>
+          <th>Peso</th>
+          <th>Status</th>
+          <th>Cód. Marca</th>
+          <th>Preço</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for produto in produtos.items %}
+        <tr>
+          <td>{{ produto.id }}</td>
+          <td>{{ produto.codigo_produto }}</td>
+          <td>{{ produto.codigo_fornecedor }}</td>
+          <td>{{ produto.descricao_produto }}</td>
+          <td>{{ produto.codigo_embalagem }}</td>
+          <td>{{ produto.descricao_embalagem }}</td>
+          <td>{{ produto.quantidade_embalagem }}</td>
+          <td>{{ produto.codigo_barra }}</td>
+          <td>{{ produto.estoque_baixo }}</td>
+          <td>{{ produto.quantidade_caixa }}</td>
+          <td>{{ produto.saldo_estoque }}</td>
+          <td>{{ produto.permite_vender }}</td>
+          <td>{{ produto.reservado }}</td>
+          <td>{{ produto.peso }}</td>
+          <td>{{ produto.status }}</td>
+          <td>{{ produto.codigo_marca }}</td>
+          <td>{{ produto.preco_custo }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div class="paginacao">
+      {% if produtos.has_prev %}
+      <a href="?pagina={{ produtos.prev_num }}">Anterior</a>
+      {% endif %}
+      {% for num in produtos.iter_pages(left_edge=1, left_current=2, right_current=2, right_edge=1) %}
+      {% if num %}
+      {% if produtos.page == num %}
+      <strong>{{ num }}</strong>
+      {% else %}
+      <a href="?pagina={{ num }}">{{ num }}</a>
+      {% endif %}
+      {% else %}
+      <span>...</span>
+      {% endif %}
+      {% endfor %}
+      {% if produtos.has_next %}
+      <a href="?pagina={{ produtos.next_num }}">Próximo</a>
+      {% endif %}
+    </div>
+  </body>
+</html>
