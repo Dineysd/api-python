@@ -36,6 +36,11 @@ with app.app_context():
 
 @app.route('/produtos', methods=['POST'])
 def criar_produto():
+    barcode = request.json['codigo_barra']
+    existing_product = Produto.query.filter_by(codigo_barra=barcode).first()
+    if existing_product:
+        return jsonify({'error': 'A product with the same barcode already exists.'}), 409
+    
     novo_produto = Produto(codigo_produto=request.json['codigo_produto'], 
         descricao_produto=request.json['descricao_produto'], 
         codigo_fornecedor=request.json['codigo_fornecedor'],
