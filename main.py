@@ -68,9 +68,10 @@ def index():
 
 @app.route('/produtos/paginacao', methods=['GET'])
 def listar_produtos():
-    page = request.args.get('page', 1, type=int)
-    per_page = request.args.get('per_page', 10, type=int)
+    page = request.args.get('pagina', 1, type=int)
+    per_page = request.args.get('total_paginas', 50, type=int)
     produtos = Produto.query.paginate(page=page, per_page=per_page)
+    total_produtos = Produto.query.count()
     result = []
     for produto in produtos.items:
         produto_data = {
@@ -93,7 +94,7 @@ def listar_produtos():
             'preco_custo': produto.preco_custo
         }
         result.append(produto_data)
-    return jsonify({'produtos': result})
+    return jsonify({'total_registro': total_produtos, 'produtos': result})
 
 @app.route('/produtos', methods=['GET'])
 def listar_produtos_central():
