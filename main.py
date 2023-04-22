@@ -66,6 +66,35 @@ def criar_produto():
 def index():
     return render_template('test.html')
 
+@app.route('/produtos/paginacao', methods=['GET'])
+def listar_produtos():
+    page = request.args.get('page', 1, type=int)
+    per_page = request.args.get('per_page', 10, type=int)
+    produtos = Produto.query.paginate(page=page, per_page=per_page)
+    result = []
+    for produto in produtos.items:
+        produto_data = {
+            'id': produto.id,
+            'codigo_produto': produto.codigo_produto,
+            'codigo_fornecedor': produto.codigo_fornecedor,
+            'descricao_produto': produto.descricao_produto,
+            'codigo_embalagem': produto.codigo_embalagem,
+            'descricao_embalagem': produto.descricao_embalagem,
+            'quantidade_embalagem': produto.quantidade_embalagem,
+            'codigo_barra': produto.codigo_barra,
+            'estoque_baixo': produto.estoque_baixo,
+            'quantidade_caixa': produto.quantidade_caixa,
+            'saldo_estoque': produto.saldo_estoque,
+            'permite_vender': produto.permite_vender,
+            'reservado': produto.reservado,
+            'peso': produto.peso,
+            'status': produto.status,
+            'codigo_marca': produto.codigo_marca,
+            'preco_custo': produto.preco_custo
+        }
+        result.append(produto_data)
+    return jsonify({'produtos': result})
+
 @app.route('/produtos', methods=['GET'])
 def listar_produtos_central():
     # Define a quantidade de produtos exibidos por página
