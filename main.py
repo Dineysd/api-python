@@ -75,7 +75,7 @@ def listar_produtos():
     if page < 1 or page > total_produtos/per_page + 1:
         return jsonify({'error': 'numero de paginas invalido'}), 400
     
-    produtos = Produto.query.paginate(page=page, per_page=per_page)
+    produtos = Produto.query.order_by(Produto.descricao_produto).paginate(page=page, per_page=per_page)
     
     result = []
     for produto in produtos.items:
