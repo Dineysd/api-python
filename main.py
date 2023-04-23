@@ -114,7 +114,7 @@ def listar_produtos_central():
     pagina_atual = request.args.get('pagina', 1, type=int)
 
     # Obtém a lista de produtos da página atual
-    produtos = Produto.query.paginate(page=pagina_atual, per_page=produtos_por_pagina)
+    produtos = Produto.query.order_by(Produto.descricao_produto).paginate(page=pagina_atual, per_page=produtos_por_pagina)
 
     # Calcula o número total de páginas
     total_paginas = produtos.total // produtos_por_pagina
