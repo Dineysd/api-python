@@ -72,6 +72,8 @@ def listar_produtos():
     per_page = request.args.get('total_paginas', 50, type=int)
     produtos = Produto.query.paginate(page=page, per_page=per_page)
     total_produtos = Produto.query.count()
+    if page > produtos.pages:
+        return jsonify({'produtos': [], 'mensagem': 'Nao ha mais paginas disponiveis.'})
     result = []
     for produto in produtos.items:
         produto_data = {
