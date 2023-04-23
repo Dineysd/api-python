@@ -71,9 +71,13 @@ def listar_produtos():
     page = request.args.get('pagina', 1, type=int)
     per_page = request.args.get('total_paginas', 50, type=int)
     total_produtos = Produto.query.count()
+    total_paginas = (total_produtos + per_page - 1)
 
     if page < 1 or page > total_produtos/per_page + 1:
         return jsonify({'error': 'numero de paginas invalido'}), 400
+    
+    if page < 1 or page > total_paginas:
+        return jsonify({'produtos': [], 'mensagem': 'Página inválida.'}), 200
     
     produtos = Produto.query.order_by(Produto.descricao_produto).paginate(page=page, per_page=per_page)
     
