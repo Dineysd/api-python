@@ -70,10 +70,13 @@ def index():
 def listar_produtos():
     page = request.args.get('pagina', 1, type=int)
     per_page = request.args.get('total_paginas', 50, type=int)
-    produtos = Produto.query.paginate(page=page, per_page=per_page)
     total_produtos = Produto.query.count()
-    if page > produtos.pages:
-        return jsonify({'produtos': [], 'mensagem': 'Nao ha mais paginas disponiveis.'})
+
+    if page < 1 or page > total_produtos/per_page + 1:
+        return jsonify({'error': 'numero de paginas invalido'}), 400
+    
+    produtos = Produto.query.paginate(page=page, per_page=per_page)
+    
     result = []
     for produto in produtos.items:
         produto_data = {
